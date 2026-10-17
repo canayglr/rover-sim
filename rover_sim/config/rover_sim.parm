@@ -1,0 +1,12 @@
+# Simülasyondaki rover (wildthumper, ArduPilotPlugin) için ArduPilot Rover ayarı.
+# rover-skid.parm'daki CRUISE_SPEED 3 m/s / CRUISE_THROTTLE 75 bu aracın fiziğine uymuyor:
+# sim rover'ın tam gazdaki hızı ~1,39 m/s. 1,0 m/s ~ %72 gaz.
+# ATC_DECEL_MAX=0 (varsayılan) iken araç fren yapmayıp serbest kayıyor; 3 ile ~0,8 sn'de duruyor.
+# GERÇEK ARAÇ İÇİN GEÇERLİ DEĞİL: gerçek denetleyicide bu değerler araca göre ayrıca ayarlanmalı.
+CRUISE_SPEED 1.0
+CRUISE_THROTTLE 72
+ATC_ACCEL_MAX 2
+ATC_DECEL_MAX 3
+GUID_TIMEOUT 1.0
+# RC override düğümü ölürse override bu süre sonra kendiliğinden bırakılır
+RC_OVERRIDE_TIME 1.0

@@ -1,0 +1,18 @@
+diff --git a/src/ArduPilotPlugin.cc b/src/ArduPilotPlugin.cc
+index a4688e8..bf086b9 100755
+--- a/src/ArduPilotPlugin.cc
++++ b/src/ArduPilotPlugin.cc
+@@ -1634,6 +1634,13 @@ void gz::sim::systems::ArduPilotPlugin::UpdateMotorCommands(
+                 // convert pwm to raw cmd: [servo_min, servo_max] => [0, 1],
+                 // default is: [1000, 2000] => [0, 1]
+                 const double pwm = _pwm[this->dataPtr->controls[i].channel];
++                // PWM=0: ArduPilot henuz cikis uretmiyor (SITL acilisi).
++                // Sinyal yok -> notr (cmd=0); aksi halde tam geri komut sayilir.
++                if (pwm < 1.0)
++                {
++                    this->dataPtr->controls[i].cmd = 0;
++                    continue;
++                }
+                 const double pwm_min = this->dataPtr->controls[i].servo_min;
+                 const double pwm_max = this->dataPtr->controls[i].servo_max;
+                 const double multiplier = this->dataPtr->controls[i].multiplier;
